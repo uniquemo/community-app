@@ -1,25 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createBrowserRouter, RouterProvider, Link } from 'react-router-dom';
+
+import HomePage from './pages/Home';
+import LoginPage from './pages/Login';
+import MatchPage from './pages/Match';
+import HubPage from './pages/Hub';
+import ErrorPage from './pages/Error';
+import Layout from './components/Layout';
+
+import { hubPageSidebarItems } from 'constants/sidebar';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: (
+      <Layout>
+        <HomePage />
+      </Layout>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/match',
+    element: (
+      <Layout showSidebar={false}>
+        <MatchPage />
+      </Layout>
+    ),
+    handle: {
+      crumb: () => <Link to='/match'>Match</Link>
+    },
+  },
+  {
+    path: '/match/:matchId/hub',
+    element: (
+      <Layout sidebarItems={hubPageSidebarItems}>
+        <HubPage />
+      </Layout>
+    ),
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
+  }
+]);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RouterProvider router={router} />
   );
 }
 

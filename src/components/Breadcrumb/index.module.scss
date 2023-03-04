@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  align-items: center;
+  color: #7b798f;
+
+  .name {
+    color: #7b798f;
+  }
+
+  .link:hover {
+    opacity: 0.8;
+  }
+
+  .lastItem {
+    color: white;
+  }
+
+  .slash {
+    margin: 0 15px;
+  }
+}

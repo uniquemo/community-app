@@ -1,0 +1,19 @@
+@import '~styles/colors.scss';
+
+.container {
+  min-width: 1320px;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: $level-1-black;
+  color: #ffffff;
+}
+
+.content {
+  height: calc(100vh - 70px);
+  padding: 0 20px 20px 0;
+  box-sizing: border-box;
+  display: flex;
+  gap: 0 20px;
+}

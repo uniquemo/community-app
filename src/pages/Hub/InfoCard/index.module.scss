@@ -1,0 +1,57 @@
+@import '~styles/colors.scss';
+
+.container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0;
+  background-color: $level-3-black;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+
+  .intro {
+    display: flex;
+    align-items: center;
+    gap: 0 20px;
+  }
+
+  .detail {
+    .name {
+      margin: 6px 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: #f2f2f2;
+    }
+
+    .shortIntro {
+      color: $font-white;
+    }
+  }
+
+  .desc {
+    .text {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      color: #7B798F;
+
+      &.withoutEllipsis {
+        -webkit-line-clamp: 9999;
+      }
+    }
+
+    .showMoreBtn {
+      margin-top: 20px;
+      color: $highlight-color;
+      text-align: center;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}

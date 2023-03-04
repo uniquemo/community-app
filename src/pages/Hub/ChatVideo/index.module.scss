@@ -1,0 +1,91 @@
+@import '~styles/colors.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: $level-1-black;
+}
+
+.videoView {
+  padding-bottom: 56%;
+  flex: 1;
+  background-color: #ddd;
+  position: relative;
+
+  .smallVideoView {
+    width: 168px;
+    height: 94px;
+    background-color: #ccc;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+  }
+}
+
+.controlContainer {
+  height: 64px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+
+  .timer {
+    display: flex;
+    align-items: center;
+    gap: 0 15px;
+
+    .time {
+      padding: 7px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #E7875E;
+      background: rgba(231, 135, 94, 0.1);
+      border-radius: 8px;
+
+      &:before {
+        margin-right: 5px;
+        content: '';
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-image: url('~assets/clock-icon.svg');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+      }
+    }
+
+    .extend {
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: white;
+      background-color: $highlight-color;
+      border-radius: 20px;
+    }
+  }
+
+  .btnGroup {
+    margin: 0 0 0 65px;
+    display: flex;
+    align-items: center;
+    gap: 0 10px;
+
+    img {
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .fullScreenBtn {
+    margin-left: auto;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}

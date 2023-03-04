@@ -1,0 +1,30 @@
+@import '~styles/colors.scss';
+
+.container {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px 0;
+  border-radius: 10px;
+  background-color: $level-2-black;
+  font-size: 14px;
+  font-weight: 600;
+
+  .item {
+    padding: 15px 0;
+    text-align: center;
+
+    &:hover,
+    &.active {
+      color: $link-hover-green;
+    }
+  }
+
+  .tag {
+    padding: 4px 8px;
+    background: linear-gradient(95.44deg, #F3A32B 3.36%, #F35B2B 97.98%);
+    border-radius: 8px;
+    font-size: 9px;
+    font-weight: 700;
+  }
+}
