@@ -1,0 +1,11 @@
+@import '~styles/colors.scss';
+
+.container {
+  .item {
+    padding: 10px 0;
+
+    &:hover {
+      color: $highlight-color;
+    }
+  }
+}

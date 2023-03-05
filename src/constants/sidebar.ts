@@ -1,3 +1,14 @@
+export const level1PageSidebarItems = [
+  {
+    name: 'Home',
+    link: '/',
+  },
+  {
+    name: 'Match',
+    link: '/match',
+  }
+];
+
 export const hubPageSidebarItems = [
   {
     name: 'Hub',

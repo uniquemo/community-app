@@ -7,13 +7,13 @@ import HubPage from './pages/Hub';
 import ErrorPage from './pages/Error';
 import Layout from './components/Layout';
 
-import { hubPageSidebarItems } from 'constants/sidebar';
+import { hubPageSidebarItems, level1PageSidebarItems } from 'constants/sidebar';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <Layout>
+      <Layout sidebarItems={level1PageSidebarItems}>
         <HomePage />
       </Layout>
     ),
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
   {
     path: '/match',
     element: (
-      <Layout showSidebar={false}>
+      <Layout sidebarItems={level1PageSidebarItems}>
         <MatchPage />
       </Layout>
     ),
