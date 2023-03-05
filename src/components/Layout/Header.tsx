@@ -38,7 +38,7 @@ const Header = () => {
         <img src={HelpIcon} alt='help icon' />
         <img src={MessageIcon} alt='message icon' />
         <img src={BellIcon} alt='bell icon' />
-        <div onClick={logout}>
+        <div onClick={logout} title='logout'>
           <Avatar size={36} name={username} />
         </div>
       </div>

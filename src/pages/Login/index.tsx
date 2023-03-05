@@ -7,55 +7,61 @@ import useLocalStorage from 'hooks/useLocalStorage';
 import styles from './index.module.scss';
 
 const LoginPage = () => {
-  const [storedValue, setStoredValue] = useLocalStorage('user');
+  const [user, setUser] = useLocalStorage('user');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const disabled = !username || !password;
 
-  const handleUsernameChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    setUsername(event.target.value);
-  };
-
-  const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    setPassword(event.target.value);
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const { name, value } = event.target;
+    if (name === 'username') {
+      setUsername(value);
+    } else if (name === 'password') {
+      setPassword(value);
+    }
   };
 
   const handleLogin = () => {
-    setStoredValue(username);
+    setUser(username);
     navigate('/');
   };
 
   useEffect(() => {
-    if (storedValue) {
+    if (user) {
       navigate('/');
-      return;
     }
-  }, [navigate, storedValue]);
+  }, [navigate, user]);
+
+  const disabled = !username || !password;
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Please login first!</h2>
+
       <div className={styles.loginForm}>
         <div className={styles.field}>
           <span className={styles.fieldLabel}>Username: </span>
           <input
+            name='username'
             className={styles.fieldInput}
             placeholder='Type your username'
             value={username}
-            onChange={handleUsernameChange}
+            onChange={handleChange}
           />
         </div>
+
         <div className={styles.field}>
           <span className={styles.fieldLabel}>Password: </span>
           <input
+            name='password'
             className={styles.fieldInput}
             type='password'
             placeholder='Type your password'
             value={password}
-            onChange={handlePasswordChange}
+            onChange={handleChange}
           />
         </div>
+
         <div
           className={cn(styles.loginBtn, disabled && styles.disabled)}
           onClick={handleLogin}

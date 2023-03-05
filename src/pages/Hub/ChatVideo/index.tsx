@@ -20,6 +20,27 @@ type Props = {
   uid?: string;
 };
 
+const ControlButton: React.FC<{
+  icon: string;
+  alt: string;
+  muted?: boolean;
+  title?: string;
+  onClick?: () => void;
+}> = ({ icon, alt, title, onClick, muted }) => {
+  return (
+    <img
+      style={{ opacity: muted ? 0.5 : 1 }}
+      title={title}
+      src={icon}
+      alt={alt}
+      onClick={onClick}
+    />
+  );
+};
+
+const SMALL_VIDEO_CLASS = '.small-video';
+const LARGE_VIDEO_CLASS = '.large-video';
+
 const ChatVideo: React.FC<Props> = ({ appId, channel, token, uid }) => {
   const fullScreenRef = useRef<HTMLDivElement>(null);
   const joinParams = useMemo(() => ({
@@ -39,11 +60,15 @@ const ChatVideo: React.FC<Props> = ({ appId, channel, token, uid }) => {
     toggleMuteAudio,
     leave,
     basicCall,
-  } = useAgora(joinParams, '.small-video', '.large-video');
+  } = useAgora(joinParams, SMALL_VIDEO_CLASS, LARGE_VIDEO_CLASS);
 
   const makeFullScreen = () => {
     if (!fullScreenRef.current) return;
-    fullScreenRef.current.requestFullscreen();
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      fullScreenRef.current.requestFullscreen();
+    }
   };
 
   return (
@@ -60,38 +85,38 @@ const ChatVideo: React.FC<Props> = ({ appId, channel, token, uid }) => {
           <div className={styles.extend}>Extend</div>
         </div>
         <div className={styles.btnGroup}>
-          <img src={SettingsIcon} alt='settings' />
-          <img
-            src={AudioIcon}
+          <ControlButton icon={SettingsIcon} alt='settings' />
+          <ControlButton
+            icon={AudioIcon}
             alt='audio'
-            style={{ opacity: audioTrackMuted ? 0.5 : 1 }}
             title={audioTrackMuted ? 'unmute audio' : 'mute audio'}
+            muted={audioTrackMuted}
             onClick={toggleMuteAudio}
           />
-          <img
-            src={VideoIcon}
+          <ControlButton
+            icon={VideoIcon}
             alt='video'
-            style={{ opacity: videoTrackMuted ? 0.5 : 1 }}
             title={videoTrackMuted ? 'unmute video' : 'mute video'}
+            muted={videoTrackMuted}
             onClick={toggleMuteVideo}
           />
-          <img
-            src={ScreenShareIcon}
+          <ControlButton
+            icon={ScreenShareIcon}
             alt='share screen'
-            style={{ opacity: screenShareEnabled ? 0.5 : 1 }}
             title={screenShareEnabled ? 'stop sharing' : 'share screen'}
+            muted={screenShareEnabled}
             onClick={toggleShareScreen}
           />
-          <img
-            src={PhoneCallIcon}
+          <ControlButton
+            icon={PhoneCallIcon}
             alt='leave'
-            style={{ opacity: ready ? 1 : 0.5 }}
             title={ready ? 'leave' : 'join'}
+            muted={!ready}
             onClick={ready ? leave : basicCall}
           />
         </div>
         <div className={styles.fullScreenBtn} onClick={makeFullScreen}>
-          <img src={FullScreeIcon} alt='full screen' />
+          <ControlButton icon={FullScreeIcon} alt='full screen' />
         </div>
       </div>
     </div>
