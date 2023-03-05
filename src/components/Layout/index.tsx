@@ -1,7 +1,12 @@
+import { useNavigate } from 'react-router-dom';
+
 import Header from './Header';
 import Sidebar, { Props as SidebarProps } from './Sidebar';
 
+import useLocalStorage from 'hooks/useLocalStorage';
+
 import styles from './index.module.scss';
+import { useEffect } from 'react';
 
 type Props = {
   children: React.ReactNode;
@@ -16,6 +21,15 @@ const Layout: React.FC<Props> = ({
   showSidebar = true,
   sidebarItems = [],
 }) => {
+  const navigate = useNavigate();
+  const [storedValue] = useLocalStorage('user');
+
+  useEffect(() => {
+    if (!storedValue) {
+      navigate('/login');
+    }
+  }, [navigate, storedValue]);
+
   return (
     <div className={styles.container}>
       {showHeader && <Header />}

@@ -1,0 +1,65 @@
+@import '~styles/colors.scss';
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: $level-1-black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.title {
+  margin: 240px 0 20px;
+}
+
+.loginForm {
+  box-sizing: border-box;
+  width: 500px;
+  height: 300px;
+  padding: 50px 30px;
+  background-color: $level-2-black;
+  border-radius: 20px;
+
+  .field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+    &Label {
+      margin-right: 15px;
+      flex: 1;
+      text-align: right;
+    }
+
+    &Input {
+      width: 350px;
+      height: 40px;
+      padding-left: 14px;
+      border-radius: 66px;
+      border: none;
+      outline: none;
+      font-size: 12px;
+    }
+  }
+
+  .loginBtn {
+    padding: 10px 15px;
+    margin-top: 40px;
+    background-color: $highlight-color;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+      opacity: 0.3;
+    }
+  }
+}

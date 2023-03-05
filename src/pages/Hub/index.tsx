@@ -2,9 +2,14 @@ import MessageItem from './MessageItem';
 import ChatVideo from './ChatVideo';
 import InfoCard from './InfoCard';
 
+import useLocalStorage from 'hooks/useLocalStorage';
+import { appId, channel, token } from 'constants/agora';
+
 import styles from './index.module.scss';
 
 const HubPage = () => {
+  const [storedValue] = useLocalStorage('user');
+
   return (
     <div className={styles.container}>
       <div className={styles.left}>
@@ -15,7 +20,12 @@ const HubPage = () => {
           </div>
         </div>
         <div className={styles.content}>
-          <ChatVideo />
+          <ChatVideo
+            appId={appId}
+            channel={channel}
+            token={token}
+            uid={storedValue}
+          />
         </div>
       </div>
       <div className={styles.right}>
