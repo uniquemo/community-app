@@ -1,28 +1,19 @@
-import { Link, useLocation, useMatches } from 'react-router-dom';
-import cn from 'classnames';
+import useCurrentRoute from 'hooks/useRoutePath';
+import { makeBreadcrumbs } from 'utils/route';
 
 import styles from './index.module.scss';
 
-type Props = {
-  items: { name: string; link?: string; }[];
-};
-
-const Breadcrumb: React.FC<Props> = ({ items = [] }) => {
-  const location = useLocation();
-  const matches = useMatches();
-  console.log('location => ', location);
-  console.log('matches => ', matches);
+const Breadcrumb = () => {
+  const { route } = useCurrentRoute();
+  const breadcrumbs = makeBreadcrumbs(route);
 
   return (
     <div className={styles.container}>
-      {items.map(({ name, link = '' }, index) => {
-        const isLastItem = index === items.length - 1;
+      {breadcrumbs.map((crumb, index) => {
+        const isLastItem = index === breadcrumbs.length - 1;
         return (
-          <div key={index}>
-            {link
-              ? <Link to={link} className={cn(styles.name, styles.link, isLastItem && styles.lastItem)}>{name}</Link>
-              : <span className={cn(styles.name, isLastItem && styles.lastItem)}>{name}</span>
-            }
+          <div key={index} className={isLastItem ? styles.lastItem : ''}>
+            {crumb()}
             {!isLastItem && <span className={styles.slash}>/</span>}
           </div>
         );

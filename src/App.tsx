@@ -1,48 +1,8 @@
-import { createBrowserRouter, RouterProvider, Link } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import HomePage from './pages/Home';
-import LoginPage from './pages/Login';
-import MatchPage from './pages/Match';
-import HubPage from './pages/Hub';
-import ErrorPage from './pages/Error';
-import Layout from './components/Layout';
+import routes from 'constants/routes';
 
-import { hubPageSidebarItems, level1PageSidebarItems } from 'constants/sidebar';
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: (
-      <Layout sidebarItems={level1PageSidebarItems}>
-        <HomePage />
-      </Layout>
-    ),
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: '/match',
-    element: (
-      <Layout sidebarItems={level1PageSidebarItems}>
-        <MatchPage />
-      </Layout>
-    ),
-    handle: {
-      crumb: () => <Link to='/match'>Match</Link>
-    },
-  },
-  {
-    path: '/match/:matchId/hub',
-    element: (
-      <Layout sidebarItems={hubPageSidebarItems}>
-        <HubPage />
-      </Layout>
-    ),
-  },
-  {
-    path: '/login',
-    element: <LoginPage />,
-  }
-]);
+const router = createBrowserRouter(routes);
 
 function App() {
   return (

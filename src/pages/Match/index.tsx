@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import { fakeMatchTitle } from 'constants/fake';
+
 import styles from './index.module.scss';
 
 const MatchPage = () => {
@@ -9,7 +11,7 @@ const MatchPage = () => {
       {(new Array(5).fill(true)).map((item, index) => {
         return (
           <Link to='/match/1/hub' key={index}>
-            <div className={styles.item}>How to have a great career in a lifetime</div>
+            <div className={styles.item}>{fakeMatchTitle}</div>
           </Link>
         );
       })}

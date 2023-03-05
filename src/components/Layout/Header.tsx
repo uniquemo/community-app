@@ -1,3 +1,4 @@
+import Breadcrumb from 'components/Breadcrumb';
 import Avatar from 'components/Avatar';
 
 import HelpIcon from 'assets/help-icon.svg';
@@ -9,31 +10,15 @@ import DownArrowIcon from 'assets/down-arrow-icon.svg';
 import useLocalStorage from 'hooks/useLocalStorage';
 
 import styles from './header.module.scss';
-import Breadcrumb from 'components/Breadcrumb';
 
 const Header = () => {
   const [username] = useLocalStorage('user');
-  const breadcrumbItems = [
-    {
-      name: 'ELC Community',
-      link: '/'
-    },
-    {
-      name: 'Match',
-    },
-    {
-      name: 'How to have a great career in a lifetime',
-    },
-    {
-      name: 'Hub',
-    }
-  ];
 
   return (
     <div className={styles.container}>
       <div className={styles.left}>
         <Avatar />
-        <Breadcrumb items={breadcrumbItems} />
+        <Breadcrumb />
       </div>
       <div className={styles.right}>
         <div className={styles.timezone}>
