@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import Breadcrumb from 'components/Breadcrumb';
 import Avatar from 'components/Avatar';
 
@@ -13,7 +15,13 @@ import useLocalStorage from 'hooks/useLocalStorage';
 import styles from './header.module.scss';
 
 const Header = () => {
-  const [username] = useLocalStorage('user');
+  const [username, ,removeItem] = useLocalStorage('user');
+  const navigate = useNavigate();
+
+  const logout = () => {
+    removeItem('user');
+    navigate('/login');
+  };
 
   return (
     <div className={styles.container}>
@@ -30,7 +38,9 @@ const Header = () => {
         <img src={HelpIcon} alt='help icon' />
         <img src={MessageIcon} alt='message icon' />
         <img src={BellIcon} alt='bell icon' />
-        <Avatar size={36} name={username} />
+        <div onClick={logout}>
+          <Avatar size={36} name={username} />
+        </div>
       </div>
     </div>
   );
