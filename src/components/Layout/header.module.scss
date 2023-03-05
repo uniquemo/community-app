@@ -1,3 +1,5 @@
+@import '~styles/colors.scss';
+
 .container {
   height: 70px;
   padding: 0 25px;
@@ -10,6 +12,10 @@
   display: flex;
   align-items: center;
   gap: 0 24px;
+
+  .logo {
+    background-color: $level-1-black;
+  }
 }
 
 .right {

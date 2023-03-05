@@ -6,6 +6,7 @@ import BellIcon from 'assets/bell-icon.svg';
 import MessageIcon from 'assets/message-icon.svg';
 import GlobeIcon from 'assets/globe-icon.svg';
 import DownArrowIcon from 'assets/down-arrow-icon.svg';
+import LogoIcon from 'assets/logo-icon.svg';
 
 import useLocalStorage from 'hooks/useLocalStorage';
 
@@ -17,7 +18,7 @@ const Header = () => {
   return (
     <div className={styles.container}>
       <div className={styles.left}>
-        <Avatar />
+        <Avatar imgUrl={LogoIcon} className={styles.logo} />
         <Breadcrumb />
       </div>
       <div className={styles.right}>
