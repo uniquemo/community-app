@@ -6,10 +6,13 @@ import MessageIcon from 'assets/message-icon.svg';
 import GlobeIcon from 'assets/globe-icon.svg';
 import DownArrowIcon from 'assets/down-arrow-icon.svg';
 
+import useLocalStorage from 'hooks/useLocalStorage';
+
 import styles from './header.module.scss';
 import Breadcrumb from 'components/Breadcrumb';
 
 const Header = () => {
+  const [username] = useLocalStorage('user');
   const breadcrumbItems = [
     {
       name: 'ELC Community',
@@ -41,7 +44,7 @@ const Header = () => {
         <img src={HelpIcon} alt='help icon' />
         <img src={MessageIcon} alt='message icon' />
         <img src={BellIcon} alt='bell icon' />
-        <Avatar size={36} />
+        <Avatar size={36} name={username} />
       </div>
     </div>
   );
