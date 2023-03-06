@@ -1,6 +1,12 @@
 export const checkIfTextOverflowed = (element: HTMLElement | null) => {
   if (!element) return false;
-  return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+  const {
+    scrollHeight,
+    clientHeight,
+    scrollWidth,
+    clientWidth
+  } = element;
+  return scrollHeight > clientHeight || scrollWidth > clientWidth;
 };
 
 export const toggleDOMVisibility = (element: HTMLElement, visible: boolean) => {

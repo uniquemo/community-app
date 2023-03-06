@@ -12,16 +12,16 @@ import AgoraRTC, {
 import { TrackMap, JoinParams, MediaTypeEnum, MediaType } from './types';
 import { toggleDOMVisibility, setDOMId } from 'utils/dom';
 import {
-  defaultClientConfig,
-  defaultLocalTrackMap,
-  videoEncoderConfig,
-  audioEncoderConfig
+  DEFAULT_CLIENT_CONFIG,
+  DEFAULT_LOCAL_TRACK_MAP,
+  VIDEO_ENCODER_CONFIG,
+  AUDIO_ENCODER_CONFIG
 } from './constants';
 
 const useAgora = (joinParams: JoinParams, localPlayerContainerSelector: string, remotePlayerContainerSelector: string) => {
   const timerRef = useRef<number | null>(null);
   const clientRef = useRef<IAgoraRTCClient | null>(null);
-  const localTrackMapRef = useRef<TrackMap>(defaultLocalTrackMap);
+  const localTrackMapRef = useRef<TrackMap>(DEFAULT_LOCAL_TRACK_MAP);
   const localPlayerRef = useRef<HTMLElement | null>(null);
   const remotePlayerRef = useRef<HTMLElement | null>(null);
 
@@ -31,7 +31,7 @@ const useAgora = (joinParams: JoinParams, localPlayerContainerSelector: string, 
   const [screenShareEnabled, setScreenShareEnabled] = useState(false);
   const [ready, setReady] = useState(false);
 
-  const createClient = useCallback((config: ClientConfig = defaultClientConfig) => {
+  const createClient = useCallback((config: ClientConfig = DEFAULT_CLIENT_CONFIG) => {
     if (!clientRef.current) {
       clientRef.current = AgoraRTC.createClient(config);
     }
@@ -40,13 +40,13 @@ const useAgora = (joinParams: JoinParams, localPlayerContainerSelector: string, 
 
   const createLocalTrackMap = useCallback(async () => {
     if (!localTrackMapRef.current.videoTrack) {
-      const localVideoTrack: ICameraVideoTrack = await AgoraRTC.createCameraVideoTrack({ encoderConfig: videoEncoderConfig });
+      const localVideoTrack: ICameraVideoTrack = await AgoraRTC.createCameraVideoTrack({ encoderConfig: VIDEO_ENCODER_CONFIG });
       localTrackMapRef.current.videoTrack = localVideoTrack;
     }
 
     if (!localTrackMapRef.current.audioTrack) {
       const localAudioTrack: IMicrophoneAudioTrack = await AgoraRTC.createMicrophoneAudioTrack({
-        encoderConfig: audioEncoderConfig,
+        encoderConfig: AUDIO_ENCODER_CONFIG,
       });
       localTrackMapRef.current.audioTrack = localAudioTrack;
     }
@@ -123,7 +123,7 @@ const useAgora = (joinParams: JoinParams, localPlayerContainerSelector: string, 
   const toggleShareScreen = useCallback(async () => {
     if (!clientRef.current || !localPlayerRef.current) return;
     if (!screenShareEnabled) {
-      const screenTrack = await AgoraRTC.createScreenVideoTrack({ encoderConfig: videoEncoderConfig });
+      const screenTrack = await AgoraRTC.createScreenVideoTrack({ encoderConfig: VIDEO_ENCODER_CONFIG });
       localTrackMapRef.current.screenTrack = screenTrack as ILocalVideoTrack;
   
       if (localTrackMapRef.current.videoTrack) {

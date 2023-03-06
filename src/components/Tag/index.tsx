@@ -19,14 +19,10 @@ const themeMap: { [key: string]: { color: string; bgColor: string; }  } = {
 
 const Tag: React.FC<Props> = ({ text, isLargeTag = false, theme = 'blue' }) => {
   const { color, bgColor } = themeMap[theme] || themeMap['blue'];
+  const tagClass = isLargeTag ? styles['largeTag'] : styles['smallTag'];
+
   return (
-    <span
-      className={isLargeTag ? styles['largeTag'] : styles['smallTag']}
-      style={{
-        color,
-        backgroundColor: bgColor,
-      }}
-    >
+    <span className={tagClass} style={{ color, backgroundColor: bgColor }}>
       {text}
     </span>
   );

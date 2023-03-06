@@ -1,4 +1,4 @@
-export const level1PageSidebarItems = [
+export const LEVEL_1_PAGE_SIDEBAR_ITEMS = [
   {
     name: 'Home',
     link: '/',
@@ -9,7 +9,7 @@ export const level1PageSidebarItems = [
   }
 ];
 
-export const hubPageSidebarItems = [
+export const HUB_PAGE_SIDEBAR_ITEMS = [
   {
     name: 'Hub',
     link: 'hub',

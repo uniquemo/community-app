@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 
+import ManAvatar from 'assets/man-avatar.svg';
 import Avatar from 'components/Avatar';
 import Tag from 'components/Tag';
+
 import { checkIfTextOverflowed } from 'utils/dom';
 
 import styles from './index.module.scss';
@@ -35,7 +37,7 @@ const InfoCard = () => {
   return (
     <div className={styles.container}>
       <div className={styles.intro}>
-        <Avatar size={90} />
+        <Avatar size={90} imgUrl={ManAvatar} />
         <div className={styles.detail}>
           <Tag text='ATTENDEE' />
           <div className={styles.name}>Eduardo Mckinney</div>

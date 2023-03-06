@@ -1,1 +1,1 @@
-export const fakeMatchTitle = 'How to have a great career in a lifetime';
+export const FAKE_MATCH_TITLE = 'How to have a great career in a lifetime';

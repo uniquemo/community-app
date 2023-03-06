@@ -1,3 +1,4 @@
+import ManAvatar from 'assets/man-avatar.svg';
 import Avatar from 'components/Avatar';
 import Tag from 'components/Tag';
 
@@ -6,7 +7,7 @@ import styles from './index.module.scss';
 const MessageItem = () => {
   return (
     <div className={styles.container}>
-      <Avatar />
+      <Avatar imgUrl={ManAvatar} />
       <div className={styles.rightContainer}>
         <div className={styles.intro}>
           <span className={styles.name}>Eduardo Mckinney</span>

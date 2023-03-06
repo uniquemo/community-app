@@ -3,12 +3,12 @@ import ChatVideo from './ChatVideo';
 import InfoCard from './InfoCard';
 
 import useLocalStorage from 'hooks/useLocalStorage';
-import { appId, channel, token } from 'constants/agora';
+import { APP_ID, CHANNEL, TOKEN } from 'constants/agora';
 
 import styles from './index.module.scss';
 
 const HubPage = () => {
-  const [storedValue] = useLocalStorage('user');
+  const [usename] = useLocalStorage('user');
 
   return (
     <div className={styles.container}>
@@ -21,10 +21,10 @@ const HubPage = () => {
         </div>
         <div className={styles.content}>
           <ChatVideo
-            appId={appId}
-            channel={channel}
-            token={token}
-            uid={storedValue}
+            appId={APP_ID}
+            channel={CHANNEL}
+            token={TOKEN}
+            uid={usename}
           />
         </div>
       </div>

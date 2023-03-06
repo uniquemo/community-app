@@ -1,0 +1,13 @@
+@import '~styles/colors.scss';
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  color: white;
+  text-align: center;
+  background-color: $level-1-black;
+}
+
+.loader {
+  padding-top: 300px;
+}
