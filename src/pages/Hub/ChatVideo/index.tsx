@@ -7,6 +7,7 @@ import VideoIcon from 'assets/video-icon.svg';
 import ScreenShareIcon from 'assets/screen-share-icon.svg';
 import PhoneCallIcon from 'assets/phone-call-icon.svg';
 import FullScreeIcon from 'assets/full-screen-icon.svg';
+import FaceFilterIcon from 'assets/face-filter.svg';
 
 import { transformSecondsToTime } from 'utils/time';
 import useAgora from 'hooks/useAgora';
@@ -86,6 +87,7 @@ const ChatVideo: React.FC<Props> = ({ appId, channel, token, uid }) => {
         </div>
         <div className={styles.btnGroup}>
           <ControlButton icon={SettingsIcon} alt='settings' />
+          <ControlButton icon={FaceFilterIcon} alt='face filters' />
           <ControlButton
             icon={AudioIcon}
             alt='audio'

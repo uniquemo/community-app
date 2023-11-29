@@ -18,6 +18,10 @@ import {
   AUDIO_ENCODER_CONFIG
 } from './constants';
 
+import { MediaStream, Player, Module, Effect, MediaStreamCapture } from '@banuba/webar'
+import { BANUBA_CLIENT_TOKEN } from 'constants/banuba';
+
+
 const useAgora = (joinParams: JoinParams, localPlayerContainerSelector: string, remotePlayerContainerSelector: string) => {
   const timerRef = useRef<number | null>(null);
   const clientRef = useRef<IAgoraRTCClient | null>(null);
@@ -31,6 +35,8 @@ const useAgora = (joinParams: JoinParams, localPlayerContainerSelector: string, 
   const [screenShareEnabled, setScreenShareEnabled] = useState(false);
   const [ready, setReady] = useState(false);
 
+  
+
   const createClient = useCallback((config: ClientConfig = DEFAULT_CLIENT_CONFIG) => {
     if (!clientRef.current) {
       clientRef.current = AgoraRTC.createClient(config);
@@ -40,7 +46,15 @@ const useAgora = (joinParams: JoinParams, localPlayerContainerSelector: string, 
 
   const createLocalTrackMap = useCallback(async () => {
     if (!localTrackMapRef.current.videoTrack) {
-      const localVideoTrack: ICameraVideoTrack = await AgoraRTC.createCameraVideoTrack({ encoderConfig: VIDEO_ENCODER_CONFIG });
+      // const localVideoTrack: ICameraVideoTrack = await AgoraRTC.createCameraVideoTrack({ encoderConfig: VIDEO_ENCODER_CONFIG });
+      const camera = await navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+      const player = await Player.create({ clientToken: BANUBA_CLIENT_TOKEN })
+      await player.addModule(new Module("https://cdn.jsdelivr.net/npm/@banuba/webar/dist/modules/background.zip"))
+      const webar = new MediaStreamCapture(player)
+      await player.use(new MediaStream(camera))
+      player.applyEffect(new Effect("BackgroundBlur.zip"))
+      player.play()
+      const localVideoTrack: any = await AgoraRTC.createCustomVideoTrack({ mediaStreamTrack: webar.getVideoTrack() });
       localTrackMapRef.current.videoTrack = localVideoTrack;
     }
 
