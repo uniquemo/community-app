@@ -106,3 +106,23 @@
     }
   }
 }
+
+
+
+.tempList {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.tempItem {
+  padding: 4px 8px;
+  color: #fff;
+  background: #26252d;
+  cursor: pointer;
+}
+
+.tempItemActive {
+  color: #04B17D;
+  background: #202b2b;
+}

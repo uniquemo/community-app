@@ -7,12 +7,13 @@ import VideoIcon from 'assets/video-icon.svg';
 import ScreenShareIcon from 'assets/screen-share-icon.svg';
 import PhoneCallIcon from 'assets/phone-call-icon.svg';
 import FullScreeIcon from 'assets/full-screen-icon.svg';
-import FaceFilterIcon from 'assets/face-filter.svg';
 
 import { transformSecondsToTime } from 'utils/time';
 import useAgora from 'hooks/useAgora';
 
 import styles from './index.module.scss';
+import { FaceFilterAction } from './FaceFilterAction';
+import { ControlButton } from 'components/ControlButton';
 
 type Props = {
   appId: string;
@@ -21,23 +22,6 @@ type Props = {
   uid?: string;
 };
 
-const ControlButton: React.FC<{
-  icon: string;
-  alt: string;
-  muted?: boolean;
-  title?: string;
-  onClick?: () => void;
-}> = ({ icon, alt, title, onClick, muted }) => {
-  return (
-    <img
-      style={{ opacity: muted ? 0.5 : 1 }}
-      title={title}
-      src={icon}
-      alt={alt}
-      onClick={onClick}
-    />
-  );
-};
 
 const SMALL_VIDEO_CLASS = '.small-video';
 const LARGE_VIDEO_CLASS = '.large-video';
@@ -61,6 +45,8 @@ const ChatVideo: React.FC<Props> = ({ appId, channel, token, uid }) => {
     toggleMuteAudio,
     leave,
     basicCall,
+    curFaceFilterTemp,
+    changeFaceFilterTemp
   } = useAgora(joinParams, SMALL_VIDEO_CLASS, LARGE_VIDEO_CLASS);
 
   const makeFullScreen = () => {
@@ -87,7 +73,7 @@ const ChatVideo: React.FC<Props> = ({ appId, channel, token, uid }) => {
         </div>
         <div className={styles.btnGroup}>
           <ControlButton icon={SettingsIcon} alt='settings' />
-          <ControlButton icon={FaceFilterIcon} alt='face filters' />
+          <FaceFilterAction selected={curFaceFilterTemp} onSelect={changeFaceFilterTemp} />
           <ControlButton
             icon={AudioIcon}
             alt='audio'

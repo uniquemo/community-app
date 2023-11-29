@@ -3,7 +3,6 @@ import AgoraRTC, {
   IAgoraRTCClient,
   ClientConfig,
   IMicrophoneAudioTrack,
-  ICameraVideoTrack,
   IAgoraRTCRemoteUser,
   ILocalVideoTrack,
   UID,
@@ -18,8 +17,9 @@ import {
   AUDIO_ENCODER_CONFIG
 } from './constants';
 
-import { MediaStream, Player, Module, Effect, MediaStreamCapture } from '@banuba/webar'
+import { Player, Module, Effect, Webcam, MediaStreamCapture } from 'https://cdn.jsdelivr.net/npm/@banuba/webar/dist/BanubaSDK.browser.esm.min.js'
 import { BANUBA_CLIENT_TOKEN } from 'constants/banuba';
+import { FaceFilterTempNames, FaceFilterTempEffects, getEffectParamValues, IFaces, IEffectConfig, BanubaModules, applyTempEffect } from './helper';
 
 
 const useAgora = (joinParams: JoinParams, localPlayerContainerSelector: string, remotePlayerContainerSelector: string) => {
@@ -28,14 +28,16 @@ const useAgora = (joinParams: JoinParams, localPlayerContainerSelector: string, 
   const localTrackMapRef = useRef<TrackMap>(DEFAULT_LOCAL_TRACK_MAP);
   const localPlayerRef = useRef<HTMLElement | null>(null);
   const remotePlayerRef = useRef<HTMLElement | null>(null);
+  const banubaPlayerRef = useRef<any>(null);
+  const currentEffectRef = useRef<any>(null)
 
   const [onlineTimeSeconds, setOnlineTimeSeconds] = useState(0);
   const [videoTrackMuted, setVideoTrackMuted] = useState(false);
   const [audioTrackMuted, setAudioTrackMuted] = useState(false);
   const [screenShareEnabled, setScreenShareEnabled] = useState(false);
   const [ready, setReady] = useState(false);
+  const [curFaceFilterTemp, setCurFaceFilterTemp] = useState<FaceFilterTempNames | undefined>(FaceFilterTempNames.default);
 
-  
 
   const createClient = useCallback((config: ClientConfig = DEFAULT_CLIENT_CONFIG) => {
     if (!clientRef.current) {
@@ -46,16 +48,26 @@ const useAgora = (joinParams: JoinParams, localPlayerContainerSelector: string, 
 
   const createLocalTrackMap = useCallback(async () => {
     if (!localTrackMapRef.current.videoTrack) {
-      // const localVideoTrack: ICameraVideoTrack = await AgoraRTC.createCameraVideoTrack({ encoderConfig: VIDEO_ENCODER_CONFIG });
-      const camera = await navigator.mediaDevices.getUserMedia({ audio: true, video: true })
-      const player = await Player.create({ clientToken: BANUBA_CLIENT_TOKEN })
-      await player.addModule(new Module("https://cdn.jsdelivr.net/npm/@banuba/webar/dist/modules/background.zip"))
+      // const camera = await navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+      const wcam = new Webcam({ width: 640, height: 480 })
+      const [player, modules] = await Promise.all([
+        Player.create({
+          devicePixelRatio: 1,
+          clientToken: BANUBA_CLIENT_TOKEN,
+        }),
+        Module.preload(BanubaModules.map(m => `https://cdn.jsdelivr.net/npm/@banuba/webar/dist/modules/${m}.zip`)),
+      ])
+      await player.addModule(...modules)
+      player.use(wcam)
+
       const webar = new MediaStreamCapture(player)
-      await player.use(new MediaStream(camera))
-      player.applyEffect(new Effect("BackgroundBlur.zip"))
       player.play()
+      // const localVideoTrack: ICameraVideoTrack = await AgoraRTC.createCameraVideoTrack({ encoderConfig: VIDEO_ENCODER_CONFIG });
       const localVideoTrack: any = await AgoraRTC.createCustomVideoTrack({ mediaStreamTrack: webar.getVideoTrack() });
       localTrackMapRef.current.videoTrack = localVideoTrack;
+
+      banubaPlayerRef.current = player
+      applyTempEffect(curFaceFilterTemp as FaceFilterTempNames, banubaPlayerRef)
     }
 
     if (!localTrackMapRef.current.audioTrack) {
@@ -195,6 +207,16 @@ const useAgora = (joinParams: JoinParams, localPlayerContainerSelector: string, 
     subscribe();
   }, [createLocalTrackMap, createClient, join, subscribe]);
 
+  const changeFaceFilterTemp = useCallback(async (temp?: FaceFilterTempNames) => {
+    banubaPlayerRef.current.clearEffect()
+    setCurFaceFilterTemp(temp)
+    if (temp) {
+      applyTempEffect(temp, banubaPlayerRef)
+      return
+    } 
+    
+  }, [])
+
   useEffect(() => {
     if (ready) {
       timerRef.current = window.setInterval(() => {
@@ -247,6 +269,8 @@ const useAgora = (joinParams: JoinParams, localPlayerContainerSelector: string, 
     screenShareEnabled,
     onlineTimeSeconds,
     ready,
+    curFaceFilterTemp,
+    changeFaceFilterTemp,
   };
 };
 
